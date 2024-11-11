@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
 import LoginScreen from "../screens/authscreens/loginScreens/LoginScreen";
 import SignupScreen from "../screens/authscreens/signupscreens/SignupScreen";
-import HomeScreen from "../screens/appscreens/HomeScreen";
+import TabScreens from "./TabScreen";
 import ResetPasswordScreen from "../screens/authscreens/loginScreens/ResetPasswordScreen";
 import EmailVerificationScreen from "../screens/authscreens/signupscreens/EmailVerificationScreen";
 const Stack = createStackNavigator();
@@ -17,11 +17,10 @@ export default function StackScreens() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {isAuth ? (
-        <>
-          <Stack.Screen name="Home" component={HomeScreen} />
-        </>
+        <></>
       ) : (
         <>
+          <Stack.Screen name="StackScreens" component={TabScreens} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="SignUp" component={SignupScreen} />
           <Stack.Screen
