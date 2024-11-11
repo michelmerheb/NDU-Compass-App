@@ -17,10 +17,11 @@ export default function StackScreens() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {isAuth ? (
-        <></>
+        <>
+          <Stack.Screen name="TabScreens" component={TabScreens} />
+        </>
       ) : (
         <>
-          <Stack.Screen name="StackScreens" component={TabScreens} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="SignUp" component={SignupScreen} />
           <Stack.Screen
