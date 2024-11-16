@@ -26,7 +26,7 @@ export default function EmailVerificationScreen({ navigation }: any) {
     setIsChecking(false);
 
     if (user?.emailVerified) {
-      navigation.navigate("GetToKnowYouScreen");
+      navigation.navigate("Login");
     } else {
       alert("Please verify your email before proceeding.");
     }

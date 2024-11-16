@@ -83,7 +83,6 @@ export default function GPACalculator() {
         <FlatList
           data={courses}
           keyExtractor={(item) => item.id}
-          ListHeaderComponent={<Text style={styles.title}>GPA Calculator</Text>}
           renderItem={({ item }) => (
             <View style={styles.courseRow}>
               <TextInput
@@ -134,12 +133,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center",
   },
   courseRow: {
     flexDirection: "row",

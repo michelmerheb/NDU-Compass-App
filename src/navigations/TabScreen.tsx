@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/appscreens/HomeScreen";
-import GPACalculator from "../screens/appscreens/GPACalculator";
+import DrawerScreens from "./DrawerScreen";
 import { Feather, AntDesign } from "@expo/vector-icons";
 import { Dimensions, StyleSheet } from "react-native";
 
@@ -16,7 +16,7 @@ const TabScreens = ({ navigation }: any) => {
           size = focused ? 25 : 20;
           if (route.name === "Home") {
             return <Feather name="home" size={size} color={color} />;
-          } else if (route.name === "GPA") {
+          } else if (route.name === "DrawerScreens") {
             return <AntDesign name="calculator" size={size} color={color} />;
           }
         },
@@ -28,6 +28,7 @@ const TabScreens = ({ navigation }: any) => {
         tabBarInactiveTintColor: "gray",
         headerTitleStyle: {
           fontSize: 20,
+          color: "#005eb8",
         },
       })}
     >
@@ -40,9 +41,9 @@ const TabScreens = ({ navigation }: any) => {
         }}
       />
       <Tab.Screen
-        name="GPA"
-        component={GPACalculator}
-        options={{ headerShown: true, title: "GPA Calculator" }}
+        name="DrawerScreens"
+        component={DrawerScreens}
+        options={{ headerShown: false, title: "GPA Calculator" }}
       />
     </Tab.Navigator>
   );
