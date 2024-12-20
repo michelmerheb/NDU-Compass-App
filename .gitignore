@@ -3,7 +3,7 @@
 # dependencies
 node_modules/
 src/config/firebaseConfig.ts/
-dialogflow-key.json/
+src/config/dialogflow-key.json/
 # Expo
 .expo/
 dist/
