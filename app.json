@@ -16,13 +16,16 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/adaptive-icon.png",
+        "foregroundImage": "./src/assets/NDUCompassLogo.png",
         "backgroundColor": "#005eb8"
       }
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
     },
-    "newArchEnabled": true
+    "newArchEnabled": true,
+    "plugins": [
+      "expo-asset"
+    ]
   }
 }

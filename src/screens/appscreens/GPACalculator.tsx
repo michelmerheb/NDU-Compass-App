@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   courseRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 10,
+    margin: 10,
   },
   input: {
     flex: 1,
