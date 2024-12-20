@@ -7,7 +7,7 @@ import {
   deleteUser,
   User,
 } from "firebase/auth";
-import { FIREBASE_AUTH } from "../../config/firebaseConfig";
+import { FIREBASE_AUTH } from "../config/firebaseConfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface AuthPayload {

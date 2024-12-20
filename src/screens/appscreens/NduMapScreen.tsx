@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
-  Dimensions,
+  SafeAreaView,
 } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import { Zoomable } from "@likashefqet/react-native-image-zoom";
 import { Image } from "expo-image";
 import * as ScreenOrientation from "expo-screen-orientation";
-import { useNavigation } from "@react-navigation/native";
 
 type Marker = {
   id: number;
@@ -58,6 +58,24 @@ export default function CampusMap({ navigation }: any) {
         require("../../assets/NewBuilding2.jpg"),
       ],
     },
+    {
+      id: 4,
+      name: "Students Parking",
+      top: 66,
+      left: 30,
+      images: [require("../../assets/Parking.jpg")],
+    },
+    {
+      id: 5,
+      name: "University Entrance",
+      top: 50,
+      left: 2,
+      images: [
+        require("../../assets/Entrance1.jpg"),
+        require("../../assets/Entrance2.jpg"),
+        require("../../assets/Entrance3.jpg"),
+      ],
+    },
   ];
 
   useEffect(() => {
@@ -86,7 +104,8 @@ export default function CampusMap({ navigation }: any) {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar style="dark" />
       <Zoomable
         minScale={1}
         maxScale={5}
@@ -122,7 +141,7 @@ export default function CampusMap({ navigation }: any) {
           })}
         </View>
       </Zoomable>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -134,17 +153,18 @@ const styles = StyleSheet.create({
   marker: {
     width: 20,
     height: 20,
-    backgroundColor: "white",
+    backgroundColor: "#005eb8",
     borderRadius: 10,
   },
   markerLabel: {
     marginTop: 5,
     fontSize: 15,
-    shadowOffset: { width: 1, height: 1 },
+    shadowOffset: { width: 2, height: 2 },
     shadowColor: "black",
     shadowOpacity: 0.5,
     color: "white",
     textAlign: "center",
+    fontWeight: "bold",
   },
   image: {
     width: "100%",

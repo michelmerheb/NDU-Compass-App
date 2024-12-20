@@ -52,8 +52,11 @@ export default function StackScreens() {
             options={{
               headerShown: true,
               title: "NDU Map",
-              headerStyle: { height: 0 },
-              headerTintColor: "white",
+              headerStyle: {
+                height: 50,
+                paddingTop: 10,
+              },
+              headerTintColor: "#005eb8",
             }}
           />
           <Stack.Screen
