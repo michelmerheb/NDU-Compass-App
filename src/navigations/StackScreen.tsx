@@ -7,6 +7,7 @@ import { setAuthState } from "../redux/slices/authSlice";
 import LoginScreen from "../screens/authscreens/loginScreens/LoginScreen";
 import SignupScreen from "../screens/authscreens/signupscreens/SignupScreen";
 import TabScreens from "./TabScreen";
+import CalendarEventsScreen from "../screens/appscreens/CalendarEventsScreen";
 import FlowChartsScreen from "../screens/appscreens/FlowChartsScreen";
 import ResetPasswordScreen from "../screens/authscreens/loginScreens/ResetPasswordScreen";
 import EmailVerificationScreen from "../screens/authscreens/signupscreens/EmailVerificationScreen";
@@ -17,7 +18,8 @@ const Stack = createStackNavigator();
 
 export default function StackScreens() {
   const [isLoading, setIsLoading] = useState(true);
-  const { isAuth } = useSelector((state: RootState) => state.auth);
+  const { isAuth, user } = useSelector((state: RootState) => state.auth);
+  const role = user?.role;
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -40,6 +42,10 @@ export default function StackScreens() {
       {isAuth ? (
         <>
           <Stack.Screen name="TabScreens" component={TabScreens} />
+          <Stack.Screen
+            name="CalendarEvents"
+            component={CalendarEventsScreen}
+          />
           <Stack.Screen name="FlowCharts" component={FlowChartsScreen} />
           <Stack.Screen
             name="GPACalculator"

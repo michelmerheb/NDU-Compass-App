@@ -7,7 +7,8 @@ import {
   deleteUser,
   User,
 } from "firebase/auth";
-import { FIREBASE_AUTH } from "../config/firebaseConfig";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../../config/firebaseConfig";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface AuthPayload {
@@ -15,14 +16,19 @@ interface AuthPayload {
   password: string;
 }
 
+interface CustomUser extends Partial<User> {
+  role?: string;
+}
+
 interface UserState {
-  user: Partial<User> | null;
+  user: CustomUser | null;
   isLoading: boolean;
   error: string | null;
   isAuth: boolean;
+  role?: string;
 }
 
-const transformUser = (user: User): Partial<User> => ({
+const transformUser = (user: User, role: string = "user"): CustomUser => ({
   uid: user.uid,
   email: user.email,
   emailVerified: user.emailVerified,
@@ -31,10 +37,11 @@ const transformUser = (user: User): Partial<User> => ({
   phoneNumber: user.phoneNumber,
   photoURL: user.photoURL,
   providerData: user.providerData,
+  role,
 });
 
 export const loginUser = createAsyncThunk<
-  Partial<User>,
+  CustomUser,
   AuthPayload,
   { rejectValue: string }
 >("auth/loginUser", async ({ email, password }, thunkAPI) => {
@@ -44,16 +51,22 @@ export const loginUser = createAsyncThunk<
       email,
       password
     );
-    const user = transformUser(userCredential.user);
+    const userDoc = await getDoc(
+      doc(FIREBASE_DB, "users", userCredential.user.uid)
+    );
+    const role = userDoc.exists() ? userDoc.data().role : "user";
+
+    const user = transformUser(userCredential.user, role);
     await AsyncStorage.setItem("user", JSON.stringify(user));
     return user;
   } catch (error: any) {
+    console.error("Login Error:", error.message);
     return thunkAPI.rejectWithValue("Incorrect email/password");
   }
 });
 
 export const signupUser = createAsyncThunk<
-  Partial<User>,
+  CustomUser,
   AuthPayload,
   { rejectValue: string }
 >("auth/signupUser", async ({ email, password }, thunkAPI) => {
@@ -63,11 +76,16 @@ export const signupUser = createAsyncThunk<
       email,
       password
     );
-    const user = transformUser(userCredential.user);
+
+    const userDocRef = doc(FIREBASE_DB, "users", userCredential.user.uid);
+    await setDoc(userDocRef, { role: "user" });
+
+    const user = transformUser(userCredential.user, "user");
     await sendEmailVerification(userCredential.user);
     await AsyncStorage.setItem("user", JSON.stringify(user));
     return user;
   } catch (error: any) {
+    console.error("Signup Error:", error.code, error.message);
     return thunkAPI.rejectWithValue("User already exists");
   }
 });
