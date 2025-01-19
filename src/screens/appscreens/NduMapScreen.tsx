@@ -76,6 +76,16 @@ export default function CampusMap({ navigation }: any) {
         require("../../assets/Entrance3.jpg"),
       ],
     },
+    {
+      id: 6,
+      name: "Basketball",
+      top: 40,
+      left: 78,
+      images: [
+        require("../../assets/BasketballCourt1.jpg"),
+        require("../../assets/BasketballCourt2.jpg"),
+      ],
+    },
   ];
 
   useEffect(() => {

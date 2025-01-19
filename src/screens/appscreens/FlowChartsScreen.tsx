@@ -5,36 +5,24 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  Modal,
 } from "react-native";
-import { WebView } from "react-native-webview";
+import { FlowchartViewer } from "../../components/FlowChartViewer";
 
-interface Major {
-  id: string;
-  name: string;
-  pdfUrl: string;
-}
-
-const majors: Major[] = [
+const majors = [
   {
     id: "1",
     name: "Computer Science",
-    pdfUrl: "https://example.com/computer-science.pdf",
+    image: require("../../assets/CS-FlowChart.png"),
   },
   {
     id: "2",
-    name: "Electrical Engineering",
-    pdfUrl: "https://example.com/electrical-engineering.pdf",
-  },
-  {
-    id: "3",
-    name: "Mechanical Engineering",
-    pdfUrl: "https://example.com/mechanical-engineering.pdf",
+    name: "Information Technology",
+    image: require("../../assets/IT-FlowChart.png"),
   },
 ];
 
 export default function FlowChartsScreen() {
-  const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<any | null>(null);
 
   return (
     <View style={styles.container}>
@@ -44,33 +32,17 @@ export default function FlowChartsScreen() {
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.majorButton}
-            onPress={() => setSelectedPdf(item.pdfUrl)}
+            onPress={() => setSelectedImage(item.image)}
           >
             <Text style={styles.majorText}>{item.name}</Text>
           </TouchableOpacity>
         )}
       />
-
-      <Modal
-        visible={!!selectedPdf}
-        onRequestClose={() => setSelectedPdf(null)}
-      >
-        <View style={{ flex: 1 }}>
-          {selectedPdf && (
-            <WebView
-              source={{ uri: selectedPdf }}
-              style={{ flex: 1 }}
-              onError={() => console.error("Failed to load PDF")}
-            />
-          )}
-          <TouchableOpacity
-            style={styles.closeButton}
-            onPress={() => setSelectedPdf(null)}
-          >
-            <Text style={styles.closeButtonText}>Close</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
+      <FlowchartViewer
+        image={selectedImage}
+        visible={!!selectedImage}
+        onClose={() => setSelectedImage(null)}
+      />
     </View>
   );
 }
@@ -79,6 +51,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    marginTop: 32,
   },
   majorButton: {
     padding: 16,
@@ -88,17 +61,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   majorText: {
-    color: "#ffffff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  closeButton: {
-    padding: 16,
-    backgroundColor: "red",
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  closeButtonText: {
     color: "#ffffff",
     fontSize: 16,
     fontWeight: "bold",

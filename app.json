@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "NDU Compass",
-    "slug": "NDU Compass",
+    "slug": "ndu-compass",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/NDUCompassLogo.png",
@@ -18,14 +18,35 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/NDUCompassLogo.png",
         "backgroundColor": "#005eb8"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.michelmerheb.nducompass"
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
     },
     "newArchEnabled": true,
     "plugins": [
-      "expo-asset"
-    ]
+      "expo-asset",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ],
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "DEFAULT"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "91f2b0f3-8910-45fa-992b-fda4db4d0759"
+      }
+    }
   }
 }

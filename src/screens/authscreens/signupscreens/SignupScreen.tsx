@@ -72,6 +72,12 @@ export default function SignupScreen({ navigation }: any) {
               touched,
             }) => (
               <>
+                {error && <Text style={styles.authErrorText}>{error}</Text>}
+                {emailSent && (
+                  <Text style={styles.emailSentText}>
+                    Verification email sent. Please check your email.
+                  </Text>
+                )}
                 <EmailPasswordBox
                   title="Email"
                   placeholder="Email"

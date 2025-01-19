@@ -14,6 +14,9 @@ import EmailVerificationScreen from "../screens/authscreens/signupscreens/EmailV
 import NduMapScreen from "../screens/appscreens/NduMapScreen";
 import GPACalculator from "../screens/appscreens/GPACalculator";
 import MarkerDetailsScreen from "../screens/appscreens/MarkerDetailsScreen";
+import AddEventScreen from "../screens/appscreens/AddEventScreen";
+import EventDetailsScreen from "../screens/appscreens/EventDetailsScreen";
+
 const Stack = createStackNavigator();
 
 export default function StackScreens() {
@@ -59,7 +62,7 @@ export default function StackScreens() {
               headerShown: true,
               title: "NDU Map",
               headerStyle: {
-                height: 50,
+                height: 60,
                 paddingTop: 10,
               },
               headerTintColor: "#005eb8",
@@ -69,6 +72,7 @@ export default function StackScreens() {
             name="MarkerDetailsScreen"
             component={MarkerDetailsScreen}
           />
+          <Stack.Screen name="AddEventScreen" component={AddEventScreen} />
         </>
       ) : (
         <>
@@ -82,6 +86,7 @@ export default function StackScreens() {
             name="EmailVerificationScreen"
             component={EmailVerificationScreen}
           />
+          <Stack.Screen name="EventDetails" component={EventDetailsScreen} />
         </>
       )}
     </Stack.Navigator>
