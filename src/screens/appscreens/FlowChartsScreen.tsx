@@ -1,48 +1,32 @@
 import React, { useState } from "react";
-import {
-  View,
-  FlatList,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
-import { FlowchartViewer } from "../../components/FlowChartViewer";
-
-const majors = [
-  {
-    id: "1",
-    name: "Computer Science",
-    image: require("../../assets/CS-FlowChart.png"),
-  },
-  {
-    id: "2",
-    name: "Information Technology",
-    image: require("../../assets/IT-FlowChart.png"),
-  },
-];
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import FlowChartViewer from "../../components/FlowChartViewer";
 
 export default function FlowChartsScreen() {
-  const [selectedImage, setSelectedImage] = useState<any | null>(null);
+  const [isViewerVisible, setIsViewerVisible] = useState(false);
+
+  const openPDF = () => {
+    setIsViewerVisible(true);
+  };
+
+  const goBack = () => {
+    setIsViewerVisible(false);
+  };
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={majors}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.majorButton}
-            onPress={() => setSelectedImage(item.image)}
-          >
-            <Text style={styles.majorText}>{item.name}</Text>
+      {!isViewerVisible ? (
+        <TouchableOpacity style={styles.majorButton} onPress={openPDF}>
+          <Text style={styles.buttonText}>Open Flowchart</Text>
+        </TouchableOpacity>
+      ) : (
+        <View style={styles.viewerContainer}>
+          <TouchableOpacity style={styles.backButton} onPress={goBack}>
+            <Text style={styles.buttonText}>Back</Text>
           </TouchableOpacity>
-        )}
-      />
-      <FlowchartViewer
-        image={selectedImage}
-        visible={!!selectedImage}
-        onClose={() => setSelectedImage(null)}
-      />
+          <FlowChartViewer />
+        </View>
+      )}
     </View>
   );
 }
@@ -52,6 +36,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     marginTop: 32,
+    backgroundColor: "#f4f4f4",
   },
   majorButton: {
     padding: 16,
@@ -59,10 +44,26 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginVertical: 8,
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
   },
-  majorText: {
+  buttonText: {
     color: "#ffffff",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  viewerContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  backButton: {
+    padding: 16,
+    backgroundColor: "#ff6347",
+    borderRadius: 8,
+    marginVertical: 8,
+    alignItems: "center",
   },
 });

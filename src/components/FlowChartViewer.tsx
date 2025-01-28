@@ -1,118 +1,69 @@
-import React, { useEffect } from "react";
-import {
-  Modal,
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-} from "react-native";
-import * as ScreenOrientation from "expo-screen-orientation";
-import {
-  GestureHandlerRootView,
-  PinchGestureHandler,
-  GestureHandlerGestureEvent,
-  State,
-} from "react-native-gesture-handler";
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-} from "react-native-reanimated";
+import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { WebView } from "react-native-webview";
+import * as FileSystem from "expo-file-system";
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
-
-interface FlowchartViewerProps {
-  image: any;
-  visible: boolean;
-  onClose: () => void;
-}
-
-export function FlowchartViewer({
-  image,
-  visible,
-  onClose,
-}: FlowchartViewerProps) {
-  const scale = useSharedValue(1);
-  const baseScale = useSharedValue(1);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
-  }));
-
-  const handlePinch = (event: GestureHandlerGestureEvent) => {
-    if (event.nativeEvent.state === State.BEGAN) {
-      baseScale.value = scale.value;
-    }
-    if (event.nativeEvent.state === State.ACTIVE) {
-      scale.value = baseScale.value * (event.nativeEvent as any).scale;
-    }
-    if (
-      event.nativeEvent.state === State.END ||
-      event.nativeEvent.state === State.CANCELLED
-    ) {
-      baseScale.value = scale.value;
-    }
-  };
+export default function FlowChartViewer() {
+  const [loading, setLoading] = useState(true);
+  const [fileUri, setFileUri] = useState<string | null>(null);
 
   useEffect(() => {
-    const lockOrientation = async () => {
-      if (visible) {
-        await ScreenOrientation.lockAsync(
-          ScreenOrientation.OrientationLock.LANDSCAPE
-        );
-      } else {
-        await ScreenOrientation.lockAsync(
-          ScreenOrientation.OrientationLock.PORTRAIT_UP
-        );
+    // Get the local file URI for the PDF
+    const loadPdf = async () => {
+      try {
+        const pdfUri = FileSystem.documentDirectory + "IT-Course FlowChart.pdf";
+        const fileInfo = await FileSystem.getInfoAsync(pdfUri);
+
+        if (!fileInfo.exists) {
+          // If the file doesn't exist, copy it from the app bundle
+          await FileSystem.downloadAsync(
+            require("../assets/IT-Course FlowChart.pdf"),
+            pdfUri
+          );
+        }
+        setFileUri(pdfUri); // Set the local file URI
+      } catch (error) {
+        console.error("Error loading PDF:", error);
       }
     };
 
-    if (visible) lockOrientation();
+    loadPdf();
+  }, []);
 
-    return () => {
-      ScreenOrientation.unlockAsync();
-    };
-  }, [visible]);
+  const handleLoad = () => {
+    setLoading(false); // Hide the loader once the WebView has loaded
+  };
 
   return (
-    <Modal visible={visible} onRequestClose={onClose} animationType="slide">
-      <GestureHandlerRootView style={styles.fullScreen}>
-        <PinchGestureHandler onGestureEvent={handlePinch}>
-          <Animated.Image
-            source={image}
-            style={[styles.image, animatedStyle]}
-            resizeMode="contain"
-          />
-        </PinchGestureHandler>
-        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-          <Text style={styles.closeButtonText}>Close</Text>
-        </TouchableOpacity>
-      </GestureHandlerRootView>
-    </Modal>
+    <View style={styles.container}>
+      {loading && (
+        <ActivityIndicator size="large" color="#007bff" style={styles.loader} />
+      )}
+      {fileUri && (
+        <WebView
+          source={{ uri: fileUri }}
+          style={styles.webview}
+          onLoad={handleLoad}
+        />
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  fullScreen: {
+  container: {
     flex: 1,
-    backgroundColor: "black",
     justifyContent: "center",
     alignItems: "center",
   },
-  image: {
-    width: screenWidth,
-    height: screenHeight,
-  },
-  closeButton: {
+  loader: {
     position: "absolute",
-    bottom: 20,
-    alignSelf: "center",
-    backgroundColor: "red",
-    padding: 10,
-    borderRadius: 5,
+    top: "50%",
   },
-  closeButtonText: {
-    color: "white",
-    fontWeight: "bold",
+  webview: {
+    flex: 1,
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#ccc",
   },
 });

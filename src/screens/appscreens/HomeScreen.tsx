@@ -1,3 +1,5 @@
+// HomeScreen.tsx
+
 import {
   SafeAreaView,
   View,
@@ -12,6 +14,7 @@ import React, { useState } from "react";
 import globalStyles from "../../styles/globalStyles";
 import { FontAwesome } from "@expo/vector-icons";
 import Block from "../../components/Block";
+import Chatbot from "../../components/Chatbot";
 
 export default function HomeScreen({ navigation }: any) {
   const [isChatbotVisible, setChatbotVisible] = useState(false);
@@ -37,7 +40,7 @@ export default function HomeScreen({ navigation }: any) {
           />
           <Block
             imageSource={require("../../assets/FlowChart.jpg")}
-            title="FLow Charts"
+            title="Flow Charts"
             onPress={() => navigation.navigate("FlowCharts")}
           />
         </ScrollView>
@@ -49,9 +52,15 @@ export default function HomeScreen({ navigation }: any) {
 
       <Modal visible={isChatbotVisible} animationType="slide" transparent>
         <View style={styles.modalContainer}>
-          <TouchableOpacity style={styles.closeButton} onPress={toggleChatbot}>
-            <FontAwesome name="close" size={30} color="white" />
-          </TouchableOpacity>
+          <View style={styles.chatbotModal}>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={toggleChatbot}
+            >
+              <FontAwesome name="close" size={30} color="white" />
+            </TouchableOpacity>
+            <Chatbot />
+          </View>
         </View>
       </Modal>
     </SafeAreaView>
@@ -83,7 +92,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: "absolute",
-    top: 20,
+    top: 10,
     right: 20,
     backgroundColor: "#FF3B30",
     borderRadius: 20,
@@ -91,5 +100,13 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 1,
+  },
+  chatbotModal: {
+    flex: 1,
+    backgroundColor: "white",
+    borderRadius: 10,
+    paddingTop: 60,
+    paddingHorizontal: 10,
   },
 });
