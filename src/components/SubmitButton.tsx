@@ -21,15 +21,13 @@ export default function SubmitButton({ title, destination, onPress }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.25,
     alignItems: "center",
     justifyContent: "center",
   },
   button: {
     backgroundColor: "skyblue",
-    padding: 15,
+    padding: 10,
     borderRadius: 5,
-    width: "30%",
   },
   buttonText: {
     color: "white",

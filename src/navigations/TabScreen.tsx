@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/appscreens/HomeScreen";
 import DrawerScreens from "./DrawerScreen";
-import { Feather, AntDesign } from "@expo/vector-icons";
+import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import { Dimensions, StyleSheet } from "react-native";
 
 const Tab = createBottomTabNavigator();
@@ -17,7 +17,7 @@ const TabScreens = ({ navigation }: any) => {
           if (route.name === "Home") {
             return <Feather name="home" size={size} color={color} />;
           } else if (route.name === "DrawerScreens") {
-            return <AntDesign name="calculator" size={size} color={color} />;
+            return <FontAwesome5 name="tools" size={size} color={color} />;
           }
         },
         tabBarShowLabel: false,

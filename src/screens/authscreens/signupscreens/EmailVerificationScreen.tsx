@@ -45,10 +45,14 @@ export default function EmailVerificationScreen({ navigation }: any) {
           color="green"
           style={styles.checkIcon}
         />
-        <Text style={styles.infoText}>
-          A verification email has been sent to your email address.
-        </Text>
-        <Text>Please verify your email to proceed.</Text>
+        <View style={{ marginBottom: 20 }}>
+          <Text style={styles.infoText}>
+            A verification email has been sent to your email address.
+          </Text>
+          <Text style={{ color: "white", textAlign: "center" }}>
+            Please verify your email to proceed.
+          </Text>
+        </View>
         <SubmitButton title="I have verified" onPress={checkEmailVerified} />
         {isChecking && <ActivityIndicator size="large" color="#0000ff" />}
       </View>
@@ -78,6 +82,7 @@ const styles = StyleSheet.create({
   },
   infoText: {
     textAlign: "center",
+    color: "#fff",
     marginBottom: 20,
     fontSize: 16,
   },

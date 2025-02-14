@@ -16,6 +16,10 @@ import GPACalculator from "../screens/appscreens/GPACalculator";
 import MarkerDetailsScreen from "../screens/appscreens/MarkerDetailsScreen";
 import AddEventScreen from "../screens/appscreens/AddEventScreen";
 import EventDetailsScreen from "../screens/appscreens/EventDetailsScreen";
+import StudyGroupScreen from "../screens/appscreens/StudyGroupScreen";
+import ExamCountdown from "../screens/appscreens/ExamCountdownScreen";
+import FreeStuffBoard from "../screens/appscreens/FreeStuffScreen";
+import QuickNotes from "../screens/appscreens/QuickNotesScreen";
 
 const Stack = createStackNavigator();
 
@@ -53,7 +57,11 @@ export default function StackScreens() {
           <Stack.Screen
             name="GPACalculator"
             component={GPACalculator}
-            options={{ headerShown: true, title: "GPA Calculator" }}
+            options={{
+              headerShown: true,
+              title: "GPA Calculator",
+              headerTintColor: "#005eb8",
+            }}
           />
           <Stack.Screen
             name="NduMapScreen"
@@ -73,6 +81,42 @@ export default function StackScreens() {
             component={MarkerDetailsScreen}
           />
           <Stack.Screen name="AddEventScreen" component={AddEventScreen} />
+          <Stack.Screen
+            name="StudyGroup"
+            component={StudyGroupScreen}
+            options={{
+              headerShown: true,
+              headerTintColor: "#005eb8",
+              headerTitle: "Study Group",
+            }}
+          />
+          <Stack.Screen
+            name="ExamCountdown"
+            component={ExamCountdown}
+            options={{
+              headerShown: true,
+              headerTitle: "Exam Countdown",
+              headerTintColor: "#005eb8",
+            }}
+          />
+          <Stack.Screen
+            name="FreeStuff"
+            component={FreeStuffBoard}
+            options={{
+              headerShown: true,
+              headerTitle: "Free stuff board",
+              headerTintColor: "#005eb8",
+            }}
+          />
+          <Stack.Screen
+            name="QuickNotes"
+            component={QuickNotes}
+            options={{
+              headerShown: true,
+              headerTitle: "Quick Notes",
+              headerTintColor: "#005eb8",
+            }}
+          />
         </>
       ) : (
         <>

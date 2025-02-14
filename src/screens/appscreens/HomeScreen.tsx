@@ -29,7 +29,7 @@ export default function HomeScreen({ navigation }: any) {
       >
         <ScrollView>
           <Block
-            imageSource={require("../../assets/Students.jpg")}
+            imageSource={require("../../assets/events.jpg")}
             title="Calendar and events"
             onPress={() => navigation.navigate("CalendarEvents")}
           />
@@ -42,6 +42,11 @@ export default function HomeScreen({ navigation }: any) {
             imageSource={require("../../assets/FlowChart.jpg")}
             title="Flow Charts"
             onPress={() => navigation.navigate("FlowCharts")}
+          />
+          <Block
+            imageSource={require("../../assets/Students.jpg")}
+            title="Study Group"
+            onPress={() => navigation.navigate("StudyGroup")}
           />
         </ScrollView>
       </KeyboardAvoidingView>

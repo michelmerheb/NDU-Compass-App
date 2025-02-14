@@ -22,6 +22,21 @@ export default function ToolsScreen({ navigation }: any) {
             title="GPA Calculator"
             onPress={() => navigation.navigate("GPACalculator")}
           />
+          <Block
+            imageSource={require("../../assets/countdown.jpg")}
+            title="Exam Countdown"
+            onPress={() => navigation.navigate("ExamCountdown")}
+          />
+          <Block
+            imageSource={require("../../assets/freestuff.jpg")}
+            title="Free Stuff Board"
+            onPress={() => navigation.navigate("FreeStuff")}
+          />
+          <Block
+            imageSource={require("../../assets/quicknotes.jpg")}
+            title="Quick Notes"
+            onPress={() => navigation.navigate("QuickNotes")}
+          />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

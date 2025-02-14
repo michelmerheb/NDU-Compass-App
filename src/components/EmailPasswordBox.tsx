@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "white",
     borderRadius: 50,
+    color: "white",
   },
   toggleButton: {
     position: "absolute",
