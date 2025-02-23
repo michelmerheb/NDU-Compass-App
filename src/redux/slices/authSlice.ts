@@ -77,16 +77,24 @@ export const signupUser = createAsyncThunk<
       password
     );
 
+    // Send verification email FIRST
+    await sendEmailVerification(userCredential.user);
+    console.log("Verification email sent to:", email);
+
+    // Then create Firestore document
     const userDocRef = doc(FIREBASE_DB, "users", userCredential.user.uid);
     await setDoc(userDocRef, { role: "user" });
 
     const user = transformUser(userCredential.user, "user");
-    await sendEmailVerification(userCredential.user);
     await AsyncStorage.setItem("user", JSON.stringify(user));
     return user;
   } catch (error: any) {
     console.error("Signup Error:", error.code, error.message);
-    return thunkAPI.rejectWithValue("User already exists");
+    return thunkAPI.rejectWithValue(
+      error.code === "auth/email-already-in-use"
+        ? "User already exists"
+        : "Failed to create account"
+    );
   }
 });
 
@@ -142,7 +150,7 @@ const authSlice = createSlice({
     },
     setAuthState: (state, action) => {
       state.user = action.payload;
-      state.isAuth = true;
+      state.isAuth = action.payload.emailVerified;
     },
   },
   extraReducers: (builder) => {

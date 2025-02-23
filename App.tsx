@@ -6,38 +6,39 @@ import { store } from "./src/redux/store";
 import { onAuthStateChanged } from "firebase/auth";
 import { FIREBASE_AUTH } from "./src/config/firebaseConfig";
 import { setAuthState, logout } from "./src/redux/slices/authSlice";
+import { getDoc, doc } from "firebase/firestore";
+import { FIREBASE_DB } from "./src/config/firebaseConfig";
 
 // Create a component to listen to auth state changes.
 const AuthStateListener: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
+    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
       if (user) {
-        // If a user is logged in, update Redux state with user info.
+        // Force a user data refresh to get latest emailVerified status
+        await user.reload();
+
+        // Get user role from Firestore
+        const userDoc = await getDoc(doc(FIREBASE_DB, "users", user.uid));
+        const role = userDoc.exists() ? userDoc.data().role : "user";
+
         dispatch(
           setAuthState({
-            uid: user.uid,
-            email: user.email,
+            // ... other user properties
             emailVerified: user.emailVerified,
-            displayName: user.displayName,
-            isAnonymous: user.isAnonymous,
-            phoneNumber: user.phoneNumber,
-            photoURL: user.photoURL,
-            role: "user", // You can adjust this if needed.
+            role: role,
           })
         );
       } else {
-        // If the user signs out, clear the state.
         dispatch(logout());
       }
     });
 
-    // Clean up the listener on unmount.
     return () => unsubscribe();
   }, [dispatch]);
 
-  return null; // This component does not render anything visible.
+  return null;
 };
 
 export default function App() {

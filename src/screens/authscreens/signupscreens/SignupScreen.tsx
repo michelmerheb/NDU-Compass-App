@@ -72,7 +72,11 @@ export default function SignupScreen({ navigation }: any) {
               touched,
             }) => (
               <>
-                {error && <Text style={styles.authErrorText}>{error}</Text>}
+                {error && error.includes("verification") && (
+                  <Text style={styles.authErrorText}>
+                    Verification email failed to send. Please try again.
+                  </Text>
+                )}
                 {emailSent && (
                   <Text style={styles.emailSentText}>
                     Verification email sent. Please check your email.

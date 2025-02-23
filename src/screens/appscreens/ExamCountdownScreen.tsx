@@ -22,6 +22,7 @@ export default function ExamCountdown() {
   const [examName, setExamName] = useState("");
   const [examDate, setExamDate] = useState<Date | null>(null);
   const [showPicker, setShowPicker] = useState(false);
+  const [initialPickerDate, setInitialPickerDate] = useState(new Date());
 
   // List of exams
   const [exams, setExams] = useState<Exam[]>([]);
@@ -161,6 +162,7 @@ export default function ExamCountdown() {
             minimumDate={new Date()}
           />
         )}
+
         <TouchableOpacity style={styles.addBtn} onPress={addExam}>
           <Text style={styles.addBtnText}>Add Exam</Text>
         </TouchableOpacity>
