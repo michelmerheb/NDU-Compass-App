@@ -33,7 +33,7 @@ export default function ExamCountdown() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
-    }, 1000);
+    }, 10000);
     return () => clearInterval(timer);
   }, []);
 
