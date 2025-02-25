@@ -8,7 +8,7 @@ export interface StudyRequest {
   course: string;
   availableTimes: string;
   note?: string;
-  createdAt: Date;
+  createdAt: string;
 }
 
 // Create a payload type that includes the current user’s uid
@@ -17,7 +17,7 @@ export interface CreateStudyRequestPayload {
   course: string;
   availableTimes: string;
   note?: string;
-  createdAt: Date;
+  createdAt: string;
 }
 
 interface StudyGroupState {
@@ -38,12 +38,13 @@ export const createStudyRequest = createAsyncThunk(
     const userDocRef = doc(FIREBASE_DB, "users", userId);
     // Now get a reference to the studyRequests subcollection
     const studyRequestsRef = collection(userDocRef, "studyRequests");
+    const timestamp = new Date().toISOString();
     // Add the new study request
     const docRef = await addDoc(studyRequestsRef, {
       course,
       availableTimes,
       note,
-      createdAt: new Date(), // using current timestamp
+      createdAt: timestamp,
     });
     // Return the newly created request (you could also include userId if desired)
     return {
@@ -51,7 +52,7 @@ export const createStudyRequest = createAsyncThunk(
       course,
       availableTimes,
       note,
-      createdAt: new Date(),
+      createdAt: timestamp,
     } as StudyRequest;
   }
 );

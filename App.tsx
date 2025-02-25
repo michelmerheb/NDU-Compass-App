@@ -25,7 +25,7 @@ const AuthStateListener: React.FC = () => {
 
         dispatch(
           setAuthState({
-            // ... other user properties
+            uid: user.uid,
             emailVerified: user.emailVerified,
             role: role,
           })

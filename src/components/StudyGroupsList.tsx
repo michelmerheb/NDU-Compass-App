@@ -91,7 +91,6 @@ const StudyGroupsList: React.FC = () => {
       await updateDoc(group.ref, {
         joinedUsers: arrayUnion(currentUser.uid),
       });
-      Alert.alert("Success", "You have joined the study group.");
       // Update local state, explicitly casting joinedUsers as string[]
       setStudyGroups((prev) =>
         prev.map((g) =>
@@ -123,7 +122,6 @@ const StudyGroupsList: React.FC = () => {
       await updateDoc(group.ref, {
         joinedUsers: arrayRemove(currentUser.uid),
       });
-      Alert.alert("Success", "You have left the study group.");
       // Update local state, filtering out currentUser.uid.
       setStudyGroups((prev) =>
         prev.map((g) =>

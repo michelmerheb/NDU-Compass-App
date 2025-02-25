@@ -73,7 +73,7 @@ const StudyGroupForm: React.FC = () => {
         course: course.trim(),
         availableTimes: availableTimes.trim(),
         note: note.trim(),
-        createdAt: new Date(),
+        createdAt: new Date().toISOString(),
       })
     );
 
