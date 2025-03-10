@@ -7,7 +7,7 @@ import { setAuthState } from "../redux/slices/authSlice";
 import LoginScreen from "../screens/authscreens/loginScreens/LoginScreen";
 import SignupScreen from "../screens/authscreens/signupscreens/SignupScreen";
 import TabScreens from "./TabScreen";
-import CalendarEventsScreen from "../screens/appscreens/CalendarEventsScreen";
+import CalendarEventScreen from "../screens/appscreens/CalendarEventScreen";
 import FlowChartsScreen from "../screens/appscreens/FlowChartsScreen";
 import ResetPasswordScreen from "../screens/authscreens/loginScreens/ResetPasswordScreen";
 import EmailVerificationScreen from "../screens/authscreens/signupscreens/EmailVerificationScreen";
@@ -20,6 +20,7 @@ import StudyGroupScreen from "../screens/appscreens/StudyGroupScreen";
 import ExamCountdown from "../screens/appscreens/ExamCountdownScreen";
 import FreeStuffBoard from "../screens/appscreens/FreeStuffScreen";
 import QuickNotes from "../screens/appscreens/QuickNotesScreen";
+import EventsScreen from "../screens/appscreens/EventsScreen";
 
 const Stack = createStackNavigator();
 
@@ -49,10 +50,6 @@ export default function StackScreens() {
       {isAuth ? (
         <>
           <Stack.Screen name="TabScreens" component={TabScreens} />
-          <Stack.Screen
-            name="CalendarEvents"
-            component={CalendarEventsScreen}
-          />
           <Stack.Screen name="FlowCharts" component={FlowChartsScreen} />
           <Stack.Screen
             name="GPACalculator"
@@ -79,6 +76,10 @@ export default function StackScreens() {
           <Stack.Screen
             name="MarkerDetailsScreen"
             component={MarkerDetailsScreen}
+          />
+          <Stack.Screen
+            name="CalendarEventScreen"
+            component={CalendarEventScreen}
           />
           <Stack.Screen name="AddEventScreen" component={AddEventScreen} />
           <Stack.Screen

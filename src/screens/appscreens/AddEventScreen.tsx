@@ -8,15 +8,19 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
+  Platform,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import ScreenHeader from "../../components/ScreenHeader";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function AddEventScreen({ route, navigation }: any) {
   const { setEvents } = route.params;
 
   const [title, setTitle] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState<Date | null>(null); // Initially null
+  const [datePicked, setDatePicked] = useState(false); // Track if date was picked
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const [imageUri, setImageUri] = useState("");
@@ -41,11 +45,23 @@ export default function AddEventScreen({ route, navigation }: any) {
     }
   };
 
+  const onDateChange = (event: any, selectedDate?: Date) => {
+    const currentDate = selectedDate || date || new Date();
+    setShowDatePicker(Platform.OS === "ios");
+    setDate(currentDate);
+    setDatePicked(true); // Mark date as picked
+  };
+
   const handleAddEvent = () => {
+    if (!date) {
+      alert("Please select a date!");
+      return;
+    }
+
     const newEvent = {
       id: Math.random().toString(),
       title,
-      date,
+      date: date.toLocaleDateString(),
       location,
       description,
       image: imageUri,
@@ -78,12 +94,26 @@ export default function AddEventScreen({ route, navigation }: any) {
             value={title}
             onChangeText={setTitle}
           />
-          <TextInput
+
+          {/* Date Picker Section */}
+          <TouchableOpacity
             style={styles.input}
-            placeholder="Date (e.g., Monday, April 15, 2024)"
-            value={date}
-            onChangeText={setDate}
-          />
+            onPress={() => setShowDatePicker(true)}
+          >
+            <Text style={datePicked ? styles.dateText : styles.placeholderText}>
+              {datePicked && date ? date.toLocaleDateString() : "Select Date"}
+            </Text>
+          </TouchableOpacity>
+
+          {showDatePicker && (
+            <DateTimePicker
+              value={date || new Date()} // Use current date as fallback
+              mode="date"
+              display="default"
+              onChange={onDateChange}
+            />
+          )}
+
           <TextInput
             style={styles.input}
             placeholder="Location"
@@ -121,6 +151,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 20,
     marginVertical: 10,
+    justifyContent: "center",
   },
   imagePickerButton: {
     backgroundColor: "#999",
@@ -149,5 +180,13 @@ const styles = StyleSheet.create({
     color: "gray",
     textAlign: "center",
     marginTop: 10,
+  },
+  dateText: {
+    fontSize: 16,
+    color: "#000",
+  },
+  placeholderText: {
+    fontSize: 14,
+    color: "#666",
   },
 });

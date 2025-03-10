@@ -10,7 +10,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import EventsCard from "../../components/EventsCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ScreenHeader from "../../components/ScreenHeader";
 
 type Event = {
   image: string;
@@ -21,7 +20,7 @@ type Event = {
   description: string;
 };
 
-export default function CalendarEventsScreen({ navigation }: any) {
+export default function EventsScreen({ navigation }: any) {
   const { user } = useSelector((state: RootState) => state.auth);
   const isModerator = user?.role === "moderator";
 
@@ -59,8 +58,6 @@ export default function CalendarEventsScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <ScreenHeader title="Events" navigation={navigation} />
-
       <View style={styles.addContent}>
         {isModerator && (
           <TouchableOpacity onPress={handleAddEvent} style={styles.button}>

@@ -31,7 +31,7 @@ export default function HomeScreen({ navigation }: any) {
           <Block
             imageSource={require("../../assets/events.jpg")}
             title="Calendar and events"
-            onPress={() => navigation.navigate("CalendarEvents")}
+            onPress={() => navigation.navigate("CalendarEventScreen")}
           />
           <Block
             imageSource={require("../../assets/NDUCampus.jpg")}
