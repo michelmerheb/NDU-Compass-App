@@ -18,7 +18,7 @@ export default function ToolsScreen({ navigation }: any) {
       >
         <ScrollView>
           <Block
-            imageSource={require("../../assets/GPABackground.webp")}
+            imageSource={require("../../assets/GPABackground.jpg")}
             title="GPA Calculator"
             onPress={() => navigation.navigate("GPACalculator")}
           />

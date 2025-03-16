@@ -49,7 +49,7 @@ export default function HomeScreen({ navigation }: any) {
             onPress={() => navigation.navigate("StudyGroup")}
           />
           <Block
-            imageSource={require("../../assets/FlowChart.jpg")}
+            imageSource={require("../../assets/AIQuizGenerator.png")}
             title="Quiz Generator"
             onPress={() => navigation.navigate("QuizGenerator")}
           />
