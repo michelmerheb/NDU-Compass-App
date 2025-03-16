@@ -48,6 +48,11 @@ export default function HomeScreen({ navigation }: any) {
             title="Study Group"
             onPress={() => navigation.navigate("StudyGroup")}
           />
+          <Block
+            imageSource={require("../../assets/FlowChart.jpg")}
+            title="Quiz Generator"
+            onPress={() => navigation.navigate("QuizGenerator")}
+          />
         </ScrollView>
       </KeyboardAvoidingView>
 

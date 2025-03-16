@@ -21,6 +21,7 @@ import ExamCountdown from "../screens/appscreens/ExamCountdownScreen";
 import FreeStuffBoard from "../screens/appscreens/FreeStuffScreen";
 import QuickNotes from "../screens/appscreens/QuickNotesScreen";
 import EventsScreen from "../screens/appscreens/EventsScreen";
+import QuizGenerator from "../screens/appscreens/QuizGeneratorScreen";
 
 const Stack = createStackNavigator();
 
@@ -115,6 +116,15 @@ export default function StackScreens() {
             options={{
               headerShown: true,
               headerTitle: "Quick Notes",
+              headerTintColor: "#005eb8",
+            }}
+          />
+          <Stack.Screen
+            name="QuizGenerator"
+            component={QuizGenerator}
+            options={{
+              headerShown: true,
+              headerTitle: "AI Quiz Generator",
               headerTintColor: "#005eb8",
             }}
           />
